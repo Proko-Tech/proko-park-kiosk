@@ -1,9 +1,10 @@
-const schedule = require('node-schedule');
 
-function startScript() {
-    schedule.scheduleJob('*/15 * * * *', function () {
+async function putParkingLotRequest() {
 
-    });
 }
 
-module.exports = {startScript};
+async function getParkingLotRequest(){
+
+}
+
+module.exports = {putParkingLotRequest, getParkingLotRequest};
