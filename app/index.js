@@ -14,7 +14,7 @@ const apiRouter = require('./routes/api');
 
 const server = express();
 
-server.use(express.urlencoded({ extended: true }));
+server.use(express.urlencoded({extended: true}));
 
 server.use(express());
 server.use(express.json());
