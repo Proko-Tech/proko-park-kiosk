@@ -11,5 +11,23 @@ async function getSpotsById(id){
         .select('*');
     return result;
 }
+/**
+ * update parking spots by id. Status can only accept the following
+ *['UNOCCUPIED','RESERVED','OCCUPIED','OFF_LINE']
+ * @param id,status,updated_time
+ * @returns {Promise<{status: string}>}
+ */
+async function postSpotStatus(id,status,updated_time){
+    try {
+        await db('spots')
+            .where({id})
+            .update({status})
+            .update({updated_time});
+        return {status:"success"};
+    } catch (err){
+        return err;
+    }
 
-module.exports={getSpotsById};
+}
+
+module.exports={getSpotsById,postSpotStatus};
