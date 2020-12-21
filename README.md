@@ -1,4 +1,4 @@
-# Raspberry Pi Rest API
+# Raspberry Pi Rest API - PROKO-TECH
 
 ## Project Description
 
