@@ -13,6 +13,7 @@ Remove any items which are not applicable.
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have added tested my program thoroughly
 - [ ] Did you add/sub fields in the environment file? if so please update .env_sample
+- [ ] If you alter/added/delete a route in the code base, did you update the api folder in shared drive?
 
 ### Confirmation of Change 
 Upload a screenshot, if possible. Otherwise, please provide instructions on how to see the change.
