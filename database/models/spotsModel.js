@@ -14,15 +14,14 @@ async function getSpotsById(id){
 /**
  * update parking spots by id. Status can only accept the following
  *['UNOCCUPIED','RESERVED','OCCUPIED','OFF_LINE']
- * @param id,status,updated_time
+ * @param id,spot_status,updated_time
  * @returns {Promise<{status: string}>}
  */
-async function postSpotStatus(id,status,updated_time){
+async function postSpotStatus(id,spot_status,updated_time){
     try {
         await db('spots')
             .where({id})
-            .update({status})
-            .update({updated_time});
+            .update({spot_status});
         return {status:"success"};
     } catch (err){
         return err;
