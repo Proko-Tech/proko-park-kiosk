@@ -4,4 +4,5 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 3000
+RUN knex migrate:latest
 CMD ["npm","start"]
