@@ -12,4 +12,16 @@ async function getSpotsById(id){
     return result;
 }
 
-module.exports={getSpotsById};
+/**
+ * get spot from db by secret key
+ * @param secret
+ * @returns {Promise<void>}
+ */
+async function getSpotBySecret(secret){
+    const result = await db('spots')
+        .where({secret})
+        .select('*');
+    return result;
+}
+
+module.exports={getSpotsById, getSpotBySecret};
