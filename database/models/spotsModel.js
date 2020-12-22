@@ -20,7 +20,7 @@ async function getSpotsById(id){
 async function updateSpotById(spotInfo){
     try {
         await db('spots')
-            .where({id})
+            .where({id:spotInfo.id})
             .update(spotInfo);
         return {status:"success"};
     } catch (err){
