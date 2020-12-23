@@ -27,6 +27,7 @@ async function updateSpotById(spotInfo){
     } catch (err){
         return err;
     }
+}
 
 /**
  * update parking spot's vehicle presence by id. Status can only be 
@@ -43,7 +44,6 @@ async function updateLeftStatus(spotInfo){
     } catch (err){
         return err;
     }
-
 }
 
 module.exports={getSpotsById,updateSpotById,updateLeftStatus};
