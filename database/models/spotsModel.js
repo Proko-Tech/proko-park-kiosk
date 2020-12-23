@@ -46,4 +46,17 @@ async function updateLeftStatus(spotInfo){
     }
 }
 
-module.exports={getSpotsById,updateSpotById,updateLeftStatus};
+/**
+ * get spot from db by secret key
+ * @param secret
+ * @returns {Promise<void>}
+ */
+async function getSpotBySecret(secret){
+    const result = await db('spots')
+        .where({secret})
+        .select('*');
+    return result;
+}
+
+
+module.exports={getSpotsById,updateSpotById,updateLeftStatus, getSpotBySecret};
