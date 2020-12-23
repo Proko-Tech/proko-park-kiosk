@@ -11,6 +11,7 @@ async function getSpotsById(id){
         .select('*');
     return result;
 }
+
 /**
  * update parking spots by id. Status can only accept the following
  *['UNOCCUPIED','RESERVED','OCCUPIED','OFF_LINE']
@@ -29,4 +30,16 @@ async function updateSpotById(spotInfo){
 
 }
 
-module.exports={getSpotsById,updateSpotById};
+/**
+ * get spot from db by secret key
+ * @param secret
+ * @returns {Promise<void>}
+ */
+async function getSpotBySecret(secret){
+    const result = await db('spots')
+        .where({secret})
+        .select('*');
+    return result;
+}
+
+module.exports={getSpotsById,updateSpotById, getSpotBySecret};
