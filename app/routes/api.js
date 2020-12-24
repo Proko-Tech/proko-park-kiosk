@@ -8,8 +8,9 @@ router.get('/', function(req, res, next) {
     res.send('success');
 });
 
-router.post('/occupied', function(req, res, next) {
-    const postResponse = spotsModel.updateSpotById(req.body);
+router.post('/occupied', async function(req, res, next) {
+    const postResponse = await spotsModel.updateSpotById(req.body);
+    console.log(postResponse);
     res.send(postResponse);
 });
 

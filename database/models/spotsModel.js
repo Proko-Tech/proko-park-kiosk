@@ -13,16 +13,16 @@ async function getSpotsById(id){
 }
 
 /**
- * update parking spots by id. Status can only accept the following
+ * update parking spots by id. spot_status can only accept the following
  *['UNOCCUPIED','RESERVED','OCCUPIED','OFF_LINE']
- * @param spotInfo
+ * @param {spot_name,secret,alive_status,spot_status}
  * @returns {Promise<{status: string}>}
  */
 async function updateSpotById(spotInfo){
     try {
         await db('spots')
             .where({id:spotInfo.id})
-            .update(spotInfo);
+            .update({spot_status:spotInfo.spot_status});
         return {status:"success"};
     } catch (err){
         return err;
