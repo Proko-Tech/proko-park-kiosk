@@ -4,9 +4,14 @@ const router = express.Router();
 const spotsModel = require('../../database/models/spotsModel');
 
 const tokenUtil = require('../auth/tokenUtil');
+const provider = require('../../provider');
 
 /* /api/route this is where all the ESP8266 will make request at */
-router.get('/', function(req, res, next) {
+router.get('/', async function(req, res, next) {
+    const requestBody ={
+        "spotInfo":{"lot_id": 1, "secret":"afdasdfad", "alive_status":true, "spot_status":"OCCUPIED"},
+    };
+    const response = await provider.putParkingLotSpotRequest(requestBody);
     res.send('success');
 });
 
