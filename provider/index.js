@@ -11,7 +11,9 @@ async function postParkingLotAuthenticate(){
         id: process.env.PARKINGLOT_ID,
         hash: process.env.PARKINGLOT_HASH,
     };
-    const response = await axios.post(`${process.env.PROVIDER_URL}/api/parking_lot_authenticate`, requestBody, {withCredentials: true});
+    const response = await axios.post(`${process.env.PROVIDER_URL}/api/parking_lot_authenticate`, requestBody, {
+        withCredentials: true,
+    });
     cookie_session=response.headers["set-cookie"][1];
     return response;
 }
