@@ -1,6 +1,7 @@
 const http = require('http');
 const app = require('./app/index');
 const automation = require('./scripts/index');
+const provider = require('./provider/index');
 
 const debug = require('debug')('Proko_Park_Raspberry_Pi:server');
 const server = http.createServer(app);
@@ -15,6 +16,14 @@ app.set('port', port);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+provider.postParkingLotAuthenticate()
+    .then(async function(response) {
+        console.log("successfully authenticated to cloud server");
+    })
+    .catch(async function(err){
+        console.log(err);
+    });
 
 automation.startScript();
 
