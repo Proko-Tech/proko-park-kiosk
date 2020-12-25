@@ -27,7 +27,6 @@ async function updateSpotById(spotInfo){
     } catch (err){
         return err;
     }
-
 }
 
 /**
@@ -42,4 +41,22 @@ async function getSpotBySecret(secret){
     return result;
 }
 
-module.exports={getSpotsById,updateSpotById, getSpotBySecret};
+/**
+ * updates all spots based on the parameter spot
+ * @param spots - array from cloud api
+ * @returns {Promise<{status: string}|{message: string, status: string}>}
+ */
+async function updateSpots(spots){
+    try {
+        await spots.map(async function(spot) {
+            await db('spots')
+                .where({secret: spot.secret})
+                .update({spot_status: spot.spot_status});
+        });
+        return {status:'success'};
+    } catch (err) {
+        return {status:'failed', message: 'spots update failed'};
+    }
+}
+
+module.exports={getSpotsById,updateSpotById, getSpotBySecret, updateSpots};

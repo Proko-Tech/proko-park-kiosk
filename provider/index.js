@@ -33,8 +33,18 @@ async function putParkingLotSpotRequest(requestBody) {
     return response;
 }
 
+/**
+ * get request to cloud api for parking lot information
+ * @returns {Promise<AxiosResponse<T>>}
+ */
 async function getParkingLotRequest(){
-
+    const response = await axios.get(`${process.env.PROVIDER_URL}/api/parking_lot/${process.env.PARKINGLOT_HASH}`, {
+        withCredentials: true,
+        headers:{
+            Cookie: cookie_session,
+        },
+    });
+    return response;
 }
 
 module.exports = {postParkingLotAuthenticate, putParkingLotSpotRequest, getParkingLotRequest};
