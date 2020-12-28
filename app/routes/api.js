@@ -6,13 +6,13 @@ const spotsModel = require('../../database/models/spotsModel');
 router.get('/spot', async function(req, res, next) {
     const {secret} = req.spotInfo;
     const rows = await spotsModel.getSpotBySecret(secret);
-    if (rows.size === 0){
+    if (rows.size !== 0){
+        const result = rows[0];
+        res.status(202)
+            .json({status:'success', result});
+    } else {
         res.status(404)
             .json({status:'failed', message: 'Failed to look up spot info'});
-    } else {
-        const result = rows[0];
-        res.status(200)
-            .json({status:'success', result});
     }
 });
 
