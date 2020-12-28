@@ -2,11 +2,19 @@ const express = require('express');
 const router = express.Router();
 const spotsModel = require('../../database/models/spotsModel');
 const tokenUtil = require('../auth/tokenUtil');
-const provider = require('../../provider/index')
-const axios = require('axios');
+const provider = require('../../provider/index');
 /* /api/route this is where all the ESP8266 will make request at */
-router.get('/', function(req, res, next) {
-    res.send('success');
+router.get('/spot', async function(req, res, next) {
+    const {secret} = req.spotInfo;
+    const rows = await spotsModel.getSpotBySecret(secret);
+    if (rows.size !== 0){
+        const result = rows[0];
+        res.status(202)
+            .json({status:'success', result});
+    } else {
+        res.status(404)
+            .json({status:'failed', message: 'Failed to look up spot info'});
+    }
 });
 
 router.post('/occupied_status', async function(req, res, next) {
