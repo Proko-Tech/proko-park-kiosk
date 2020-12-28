@@ -1,4 +1,6 @@
 const schedule = require('node-schedule');
+const provider = require('../provider');
+const spotsModel = require('../database/models/spotsModel')
 
 /**
  * the script that runs every 10 seconds to update spot info

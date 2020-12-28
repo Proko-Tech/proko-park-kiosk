@@ -2,15 +2,18 @@ const express = require('express');
 const router = express.Router();
 const spotsModel = require('../../database/models/spotsModel');
 const tokenUtil = require('../auth/tokenUtil');
-const http = require('http');
+const provider = require('../../provider/index')
+const axios = require('axios');
 /* /api/route this is where all the ESP8266 will make request at */
 router.get('/', function(req, res, next) {
     res.send('success');
 });
 
-router.post('/occupiedOrLeft', async function(req, res, next) {
+router.post('/occupied_status', async function(req, res, next) {
+    const cookie = await  provider.getParkingLotRequest();
+    const output = await provider.putParkingLotSpotRequest(req);
+    console.log(output);
     const postResponse = await spotsModel.updateSpotById(req.body);
-    console.log(postResponse);
     res.send(postResponse);
 });
 
