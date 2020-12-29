@@ -58,6 +58,7 @@ real time status, and update sensor status.
 ```
 npm install
 npm install -g knex
+npm install forever -g
 ```
 use the first command to install all dependencies of the repository, and the second command
 installs knex functionalities in the project. 
@@ -85,12 +86,15 @@ or
 npm start
 ```
 
-### Deploy app with Docker
+### Deploy app
+First time:
 ```
-sudo docker-compose build
-sudo docker-compose up
+sudo forever start app.js 
 ```
-
+For updates and redeployment
+```
+sudo forever restartall
+```
 ## Database Model
 
 #### spots table
