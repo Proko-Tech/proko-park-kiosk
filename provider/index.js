@@ -1,6 +1,5 @@
 const axios = require('axios');
 
-let cookie_session;
 
 /**
  * authenticates axios with cookie info
@@ -14,7 +13,8 @@ async function postParkingLotAuthenticate(){
     const response = await axios.post(`${process.env.PROVIDER_URL}/api/parking_lot_authenticate`, requestBody, {
         withCredentials: true,
     });
-    cookie_session=response.headers["set-cookie"][1];
+    const cookie_session=response.headers["set-cookie"][1];
+    axios.defaults.headers.common['Cookie'] = cookie_session?cookie_session:'';
     return response;
 }
 
@@ -26,9 +26,6 @@ async function postParkingLotAuthenticate(){
 async function putParkingLotSpotRequest(requestBody) {
     const response = await axios.put(`${process.env.PROVIDER_URL}/api/parking_lot/spot`, requestBody, {
         withCredentials: true,
-        headers:{
-            Cookie: cookie_session,
-        },
     });
     return response;
 }
@@ -40,9 +37,6 @@ async function putParkingLotSpotRequest(requestBody) {
 async function getParkingLotRequest(){
     const response = await axios.get(`${process.env.PROVIDER_URL}/api/parking_lot/${process.env.PARKINGLOT_HASH}`, {
         withCredentials: true,
-        headers:{
-            Cookie: cookie_session,
-        },
     });
     return response;
 }
