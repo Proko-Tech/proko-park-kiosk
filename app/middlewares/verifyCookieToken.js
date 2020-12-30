@@ -8,7 +8,7 @@ const tokenUtil = require('../auth/tokenUtil');
  * @returns {Promise<void>}
  */
 async function verifyCookieToken(req, res, next) {
-    const spotToken = req.cookies.spotToken;
+    const spotToken = req.headers.token;
     const spotInfo = spotToken?await tokenUtil.validateToken(spotToken):null;
     if (spotInfo) {
         req.spotInfo = spotInfo.spotInfo;
