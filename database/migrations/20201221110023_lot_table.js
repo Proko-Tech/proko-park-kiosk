@@ -3,7 +3,6 @@ const spot_status_enum = [
     'RESERVED',
     'OCCUPIED',
     'OFF_LINE',
-    'ERROR',
 ];
 exports.up = function(knex) {
     return knex.schema.createTable('spots', (tbl)=>{
