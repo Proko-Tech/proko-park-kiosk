@@ -1,0 +1,32 @@
+
+i.icon-blue {
+    color: #7e94ff;
+}
+
+.separate_lines{
+    white-space: pre-line;
+}
+
+.modal {
+    width: 60% !important ;
+}
+
+blockquote {
+    font-size: 18px;
+}
+
+.background_header{
+    height:300px;
+    width: 100vw;
+    position: fixed !important;;
+}
+
+.fixed_div{
+    position: relative;
+}
+
+.logo_text{
+    font-size: 22px;
+    color: #458000;
+}
+

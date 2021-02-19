@@ -41,4 +41,16 @@ async function getParkingLotRequest(){
     return response;
 }
 
-module.exports = {postParkingLotAuthenticate, putParkingLotSpotRequest, getParkingLotRequest};
+/**
+ * post request to check if user scan is valid
+ * @param requestBody
+ * @returns {Promise<AxiosResponse<T>>}
+ */
+async function postParkingLotScannedRequest(requestBody){
+    const response = await axios.post(`${process.env.PROVIDER_URL}/api/parking_lot/scan`, requestBody, {
+        withCredentials: true,
+    });
+    return response;
+}
+
+module.exports = {postParkingLotAuthenticate, putParkingLotSpotRequest, getParkingLotRequest, postParkingLotScannedRequest};

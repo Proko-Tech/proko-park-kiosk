@@ -25,8 +25,6 @@ server.set('views', path.join(__dirname, 'views'));
 server.set('view engine', 'ejs');
 
 server.use(logger('dev'));
-server.use(helmet());
-server.use(cors());
 server.use(cookieParser());
 server.use(express.static(path.join(__dirname, 'public')));
 

@@ -1,9 +1,110 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
-    <title><%= title %></title>
+    <title>title</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" ></script>
+    <script src="/javascripts/instascan.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <script script-src='unsafe-inline' https='nonce-abcdefg'>
+
+    </script>
 </head>
 <body>
-<h1>Hi there</h1>
+<main>
+    <div class="indigo background_header">
+    </div>
+<div class="valign-wrapper container fixed_div" style="padding-top: 40px">
+    <div class="row login-box">
+        <div class="col card s12">
+            <div class="card-content" id="card">
+                <div class="row">
+                    <div class="card-title">
+                        Hi, Welcome! Please scan your QRCode
+                    </div>
+                </div>
+                <div class="row">
+                    <p>Thank you for using Proko Park, on your app, in your app, open up your account QRCode</p>
+                    <p>It should be displayed automatically as you approach the gate.</p>
+                    <p>Or, if it isn't displayed, Account -> Account QRCode</p>
+                </div>
+                <video id="preview" class="row"></video>
+                <div class="row" style="display:none;" id="confirmation">
+                    <div class="row">
+                        <img src="images/check.png" class="col s8 push-s2">
+                    </div>
+                    <div class="row">
+                        <div class="col s8 push-s2">
+                            <span>Please go to spot </span>
+                            <span id="spot_value" class="flow-text green-text"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            let currentCamera;
+            let scanner = new Instascan.Scanner(
+                {
+                    video: document.getElementById('preview')
+                }
+            );
+
+            scanner.addListener('scan', function(content) {
+                scanner.stop();
+                const card = document.getElementById('card');
+                const loadingBar = document.createElement('div');
+                loadingBar.className = 'progress';
+                const loadingAnimate = document.createElement('div');
+                loadingAnimate.className = 'indeterminate';
+                loadingBar.appendChild(loadingAnimate);
+                card.appendChild(loadingBar);
+                $.ajax({
+                    type : "POST",
+                    data: {content},
+                    url: "/scanned",
+                    success : function(result){
+                        card.removeChild(loadingBar);
+                        const confirmation = document.getElementById('confirmation');
+                        const spot_value = document.getElementById('spot_value');
+                        confirmation.style.display='block';
+                        spot_value.innerHTML = result.data.spot_name;
+                        setTimeout(() => {
+                            confirmation.style.display='none';
+                            spot_value.innerHTML = '';
+                            scanner.start(currentCamera);
+                        }, 4000);
+
+                    },
+                    error : function(e) {
+                        console.log("ERROR: ", e);
+                    }
+                });
+            });
+
+            Instascan.Camera.getCameras().then(cameras =>
+            {
+                console.log(cameras.length);
+                if(cameras.length > 0){
+                    if(cameras.length==1) {
+                        scanner.start(cameras[0]);
+                    }else{
+                        currentCamera = cameras[0];
+                        scanner.start(cameras[0]);
+                    }
+                } else {
+                    console.error("Please enable Camera!");
+                }
+            });
+        </script>
+</div>
+</div>
+</main>
 </body>
 </html>
