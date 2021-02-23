@@ -46,6 +46,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="row" style="display:none;" id="failed_confirmation">
+                    <div class="row">
+                        <img src="images/sad.png" class="col s8 push-s2">
+                    </div>
+                    <div class="row">
+                        <div class="col s8 push-s2">
+                            <span>No Reservation history found!</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <script>
@@ -71,16 +81,24 @@
                     url: "/scanned",
                     success : function(result){
                         card.removeChild(loadingBar);
-                        const confirmation = document.getElementById('confirmation');
-                        const spot_value = document.getElementById('spot_value');
-                        confirmation.style.display='block';
-                        spot_value.innerHTML = result.data.spot_name;
-                        setTimeout(() => {
-                            confirmation.style.display='none';
-                            spot_value.innerHTML = '';
-                            scanner.start(currentCamera);
-                        }, 4000);
-
+                        if(result !== 'failed') {
+                            const confirmation = document.getElementById('confirmation');
+                            const spot_value = document.getElementById('spot_value');
+                            confirmation.style.display = 'block';
+                            spot_value.innerHTML = result.data.spot_name;
+                            setTimeout(() => {
+                                confirmation.style.display = 'none';
+                                spot_value.innerHTML = '';
+                                scanner.start(currentCamera);
+                            }, 4000);
+                        } else {
+                            const failed_confirmation = document.getElementById('failed_confirmation');
+                            failed_confirmation.style.display = 'block';
+                            setTimeout(() => {
+                                failed_confirmation.style.display = 'none';
+                                scanner.start(currentCamera);
+                            }, 4000);
+                        }
                     },
                     error : function(e) {
                         console.log("ERROR: ", e);
