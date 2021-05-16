@@ -81,7 +81,6 @@ async function updateLiveStatus(){
         .select('id');
     await offline_spot_ids.map(async (id) => {
         const batch_body = {
-            spot_status: 'OFF_LINE',
             alive_status: false,
         };
         await db('spots')
