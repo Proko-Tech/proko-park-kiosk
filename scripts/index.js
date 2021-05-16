@@ -12,7 +12,9 @@ const provider = require('../provider');
 function startScript() {
     schedule.scheduleJob('*/10 * * * * *', async function() {
         try {
-            const response = await provider.getParkingLotRequest();
+            await spotsModel.updateLiveStatus();
+            const lot_spots = await spotsModel.getAll();
+            const response = await provider.postParkingLotRequest(lot_spots);
             const spots = response.data.parking_lot_info.spots;
             const result = await spotsModel.updateSpots(spots);
             if (result.status !== 'success'){

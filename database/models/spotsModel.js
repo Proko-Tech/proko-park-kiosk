@@ -1,6 +1,16 @@
 const db = require('../dbConfig');
 
 /**
+ * get all spots
+ * @returns {Promise<void>}
+ */
+async function getAll(){
+    const result = await db('spots')
+        .select('*');
+    return result;
+}
+
+/**
  * get spot from db by key id
  * @param id
  * @returns {Promise<void>}
@@ -59,4 +69,25 @@ async function updateSpots(spots){
     }
 }
 
-module.exports={getSpotsById,updateSpotBySecret, getSpotBySecret, updateSpots};
+/**
+ * update the live status of each spots
+ * @returns {Promise<void>}
+ */
+async function updateLiveStatus(){
+    const date_10_mins_ago = new Date();
+    date_10_mins_ago.setMinutes(date_10_mins_ago.getMinutes()-10);
+    const offline_spot_ids = await db('spots')
+        .where('updated_at', '<', date_10_mins_ago)
+        .select('id');
+    await offline_spot_ids.map(async (id) => {
+        const batch_body = {
+            spot_status: 'OFF_LINE',
+            alive_status: false,
+        };
+        await db('spots')
+            .update(batch_body)
+            .where(id);
+    });
+}
+
+module.exports={getSpotsById,updateSpotBySecret, getSpotBySecret, updateSpots, getAll, updateLiveStatus};
