@@ -8,6 +8,7 @@ router.get('/spot', async function(req, res, next) {
     const {secret} = req.spotInfo;
     const update_body = {
         alive_status: true,
+        updated_at: new Date(),
     };
     const rows = await spotsModel.getSpotBySecret(secret);
     const {status} = await spotsModel.updateSpotBySecret(secret, update_body);
@@ -27,6 +28,7 @@ router.post('/occupied_status', async function(req, res, next) {
         secret:req.spotInfo.secret,
         lot_id: process.env.PARKINGLOT_ID,
         alive_status: true,
+        updated_at: new Date(),
     };
     const requestBody = {spotInfo};
     const output = await provider.putParkingLotSpotRequest(requestBody);
