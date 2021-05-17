@@ -6,8 +6,12 @@ const provider = require('../../provider/index');
 /* /api/route this is where all the ESP8266 will make request at */
 router.get('/spot', async function(req, res, next) {
     const {secret} = req.spotInfo;
+    const update_body = {
+        alive_status: true,
+    };
     const rows = await spotsModel.getSpotBySecret(secret);
-    if (rows.size !== 0){
+    const {status} = await spotsModel.updateSpotBySecret(secret, update_body);
+    if (rows.size !== 0 && status === 'success'){
         const result = rows[0];
         res.status(202)
             .json({status:'success', result});
