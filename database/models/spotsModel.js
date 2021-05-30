@@ -74,10 +74,10 @@ async function updateSpots(spots){
  * @returns {Promise<void>}
  */
 async function updateLiveStatus(){
-    const date_10_mins_ago = new Date();
-    date_10_mins_ago.setMinutes(date_10_mins_ago.getMinutes()-10);
+    const date_1_min_ago = new Date();
+    date_1_min_ago.setMinutes(date_1_min_ago.getMinutes()-1);
     const offline_spot_ids = await db('spots')
-        .where('updated_at', '<', date_10_mins_ago)
+        .where('updated_at', '<', date_1_min_ago)
         .select('id');
     await offline_spot_ids.map(async (id) => {
         const batch_body = {
