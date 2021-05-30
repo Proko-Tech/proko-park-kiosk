@@ -50,6 +50,7 @@ async function postParkingLotRequest(requestBody){
 async function postParkingLotScannedRequest(requestBody){
     const response = await axios.post(`${process.env.PROVIDER_URL}/api/parking_lot/scan`, requestBody, {
         withCredentials: true,
+        arrived_at: new Date(),
     });
     return response;
 }
