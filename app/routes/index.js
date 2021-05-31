@@ -32,6 +32,7 @@ router.post('/scanned', async function(req, res, next){
     const {content} = req.body;
     const requestBody = {
         email: content,
+        arrived_at: new Date(),
     };
     try {
         const response = await provider.postParkingLotScannedRequest(requestBody);
