@@ -5,6 +5,7 @@ services:
     restart: always
     build: .
     devices:
-      - "/dev/ttyUSB0:/dev/ttyUSB1"
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyUSB1:/dev/ttyUSB1
     ports:
       - '8000:8000'
