@@ -4,5 +4,7 @@ services:
     container_name: raspberry-pi-container
     restart: always
     build: .
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB1"
     ports:
       - '8000:8000'
