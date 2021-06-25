@@ -61,7 +61,7 @@ async function updateSpots(spots){
         await spots.map(async function(spot) {
             await db('spots')
                 .where({secret: spot.secret})
-                .update({spot_status: spot.spot_status});
+                .update({spot_status: spot.spot_status, available_firmware_version: spot.available_firmware_version});
         });
         return {status:'success'};
     } catch (err) {
