@@ -11,7 +11,9 @@ exports.up = function(knex) {
         tbl.text('secret');// ESP8266 hashed ID
         tbl.boolean('alive_status');
         tbl.enum('spot_status', spot_status_enum, {useNative: true, enumName:'spot_status_enum'}).notNullable().index();
-
+        tbl.integer('firmware_version').defaultTo(1);
+        tbl.integer('available_firmware_version').defaultTo(1);
+        tbl.dateTime('firmware_updated_at').defaultTo(knex.fn.now());
     });
 };
 
