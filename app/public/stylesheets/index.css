@@ -1,4 +1,8 @@
 
+html, body, .my-wrapper {
+    height: 100%;
+}
+
 i.icon-blue {
     color: #7e94ff;
 }
@@ -30,3 +34,26 @@ blockquote {
     color: #458000;
 }
 
+#preview{
+    margin: auto;
+    display: block;
+}
+
+#videoMessage{
+    position: absolute; top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.gradient_text{
+    font-size: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to right, #f32170,
+    #ff6b08, #cf23cf, #eedd44);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
