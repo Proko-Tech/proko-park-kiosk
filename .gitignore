@@ -4,6 +4,9 @@
 # ignore node_modules
 node_modules/
 
+desktop-app/node_modules/
+desktop-app/.env
+
 # vscode ignores
 .vscode/*
 !.vscode/settings.json
