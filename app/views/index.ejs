@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>WELCOME</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" ></script>
+    <script src="/javascripts/instascan.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <script script-src='unsafe-inline' https='nonce-abcdefg'>
+
+    </script>
+</head>
+<body class="purple darken-4 my-wrapper valign-wrapper">
+    <div class="row" style="display:none;" id="confirmation">
+        <div class="row">
+            <img src="images/logo_transparent.png" class="col s6 push-s3">
+        </div>
+        <div class="row">
+            <div class="col s12 center-align">
+                <span class="gradient_text">Welcome! Please go to spot </span> <br>
+                <span id="spot_value" class="flow-text green-text lighten-4"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="display:none;" id="failed_confirmation">
+        <div class="row">
+            <img src="images/logo_transparent.png" class="col s6 push-s3">
+        </div>
+        <div class="row">
+            <img src="images/sad.png" class="col s8 push-s2">
+        </div>
+    </div>
+            <div class="row" id="card">
+                <div class="row center-align valign-wrapper">
+                    <img src="images/welcome.png">
+                </div>
+                <video id="preview" playsinline="" height="450">
+                </video>
+                <div id="videoMessage" class="my-wrapper valign-wrapper">
+                    <img src="images/target.png" width="200" height="200" style="margin-top: 130px">
+                </div>
+            </div>
+        <script>
+            let currentCamera;
+            let scanner = new Instascan.Scanner(
+                {
+                    video: document.getElementById('preview')
+                }
+            );
+
+            scanner.addListener('scan', function(content) {
+                scanner.stop();
+                const card = document.getElementById('card');
+                const loadingBar = document.createElement('div');
+                loadingBar.className = 'progress';
+                const loadingAnimate = document.createElement('div');
+                loadingAnimate.className = 'indeterminate';
+                loadingBar.appendChild(loadingAnimate);
+                card.appendChild(loadingBar);
+                $.ajax({
+                    type : "POST",
+                    data: {content},
+                    url: "/scanned",
+                    success : function(result){
+                        card.removeChild(loadingBar);
+                        if(result !== 'failed') {
+                            const confirmation = document.getElementById('confirmation');
+                            const spot_value = document.getElementById('spot_value');
+                            confirmation.style.display = 'block';
+                            spot_value.innerHTML = result.data.spot_name;
+                            card.style.display='none';
+                            setTimeout(() => {
+                                confirmation.style.display = 'none';
+                                card.style.display='block';
+                                spot_value.innerHTML = '';
+                                scanner.start(currentCamera);
+                            }, 4000);
+                        } else {
+                            const failed_confirmation = document.getElementById('failed_confirmation');
+                            failed_confirmation.style.display = 'block';
+                            card.style.display='none';
+                            setTimeout(() => {
+                                failed_confirmation.style.display = 'none';
+                                card.style.display='block';
+                                scanner.start(currentCamera);
+                            }, 4000);
+                        }
+                    },
+                    error : function(e) {
+                        console.log("ERROR: ", e);
+                    }
+                });
+            });
+
+            Instascan.Camera.getCameras().then(cameras =>
+            {
+                console.log(cameras.length);
+                if(cameras.length > 0){
+                    if(cameras.length==1) {
+                        scanner.start(cameras[0]);
+                    }else{
+                        currentCamera = cameras[0];
+                        scanner.start(cameras[0]);
+                    }
+                } else {
+                    console.error("Please enable Camera!");
+                }
+            });
+        </script>
+</body>
+</html>
