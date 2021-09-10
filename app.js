@@ -2,11 +2,12 @@ const http = require('http');
 const app = require('./app/index');
 const automation = require('./scripts/index');
 const provider = require('./provider/index');
+require('dotenv').config();
 
 const debug = require('debug')('Proko_Park_Raspberry_Pi:server');
 const server = http.createServer(app);
 
-const port = normalizePort(process.env.PORT || '80');
+const port = normalizePort(process.env.PORT || '8000');
 app.set('port', port);
 
 /**
