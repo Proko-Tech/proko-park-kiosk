@@ -8,14 +8,19 @@ const tokenUtil = require('../auth/tokenUtil');
  * @returns {Promise<void>}
  */
 async function verifyCookieToken(req, res, next) {
-    const spotToken = req.headers.token;
-    const spotInfo = spotToken?await tokenUtil.validateToken(spotToken):null;
-    if (spotInfo) {
-        req.spotInfo = spotInfo.spotInfo;
-        next();
-    } else {
-        res.status(401)
-            .json({status:'failed', data: 'Session over'});
+    try {
+        const spotToken = req.headers.token;
+        const spotInfo = spotToken ? await tokenUtil.validateToken(spotToken) : null;
+        if (spotInfo) {
+            req.spotInfo = spotInfo.spotInfo;
+            next();
+        } else {
+            res.status(401)
+                .json({status: 'failed', data: 'Session over'});
+        }
+    } catch (err){
+        res.status(502)
+            .json({status: 'failed', data: 'malfunction'});
     }
 }
 
