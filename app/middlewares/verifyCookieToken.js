@@ -14,7 +14,7 @@ async function verifyCookieToken(req, res, next) {
         req.spotInfo = spotInfo.spotInfo;
         next();
     } else {
-        res.status(404)
+        res.status(401)
             .json({status:'failed', data: 'Session over'});
     }
 }
