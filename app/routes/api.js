@@ -49,8 +49,9 @@ router.post('/occupied_status', async function(req, res, next) {
     }
 });
 
-router.get('/violation', async function(req, res, next){
+router.get('/violation/:id', async function(req, res, next){
     const spotInfo = {
+        spot_id: req.params.id,
         secret:req.spotInfo.secret,
         lot_id: process.env.PARKINGLOT_ID,
         alive_status: true,
