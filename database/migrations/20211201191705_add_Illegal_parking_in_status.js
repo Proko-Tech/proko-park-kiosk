@@ -13,14 +13,17 @@ const previous_spot_status_enum = [
     'OFF_LINE',
 ];
 
-exports.up = function(knex) {
+exports.up = async function(knex) {
     return knex.schema.alterTable('spots', function(tbl) {
-        tbl.enum('spot_status', spot_status_enum, {useNative: true, enumName:'spot_status_enum'}).notNullable().index().alter();
+        tbl.dropColumn('spot_status');
+        tbl.enum('spot_status', spot_status_enum, {useNative: true, enumName:'spot_status_enum'}).notNullable().index();
     });
+
 };
 
 exports.down = function(knex) {
     return knex.schema.alterTable('spots', function(tbl) {
-        tbl.enum('spot_status', previous_spot_status_enum, {useNative: true, enumName:'spot_status_enum'}).notNullable().index().alter();
+        tbl.dropColumn('spot_status');
+        tbl.enum('spot_status', previous_spot_status_enum, {useNative: true, enumName:'spot_status_enum'}).notNullable().index();
     });
 };
