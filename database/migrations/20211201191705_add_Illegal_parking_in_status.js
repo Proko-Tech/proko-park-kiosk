@@ -14,13 +14,13 @@ const previous_spot_status_enum = [
 ];
 
 exports.up = function(knex) {
-    knex.schema.alterTable('spots', function(table) {
+    return knex.schema.alterTable('spots', function(tbl) {
         tbl.enum('spot_status', spot_status_enum, {useNative: true, enumName:'spot_status_enum'}).notNullable().index().alter();
     });
 };
 
 exports.down = function(knex) {
-    knex.schema.alterTable('spots', function(table) {
+    return knex.schema.alterTable('spots', function(tbl) {
         tbl.enum('spot_status', previous_spot_status_enum, {useNative: true, enumName:'spot_status_enum'}).notNullable().index().alter();
     });
 };
