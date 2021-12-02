@@ -54,4 +54,16 @@ async function postParkingLotScannedRequest(requestBody){
     return response;
 }
 
-module.exports = {postParkingLotAuthenticate, putParkingLotSpotRequest, postParkingLotRequest, postParkingLotScannedRequest};
+/**
+ * post request to send spot violation
+ * @param requestBody
+ * @returns {Promise<AxiosResponse<T>>}
+ */
+async function postSpotViolationRequest(requestBody){
+    const response = await axios.post(`${process.env.PROVIDER_URL}/api/parking_lot/violation`, requestBody, {
+        withCredentials: true,
+    });
+    return response;
+}
+
+module.exports = {postParkingLotAuthenticate, putParkingLotSpotRequest, postParkingLotRequest, postParkingLotScannedRequest, postSpotViolationRequest};

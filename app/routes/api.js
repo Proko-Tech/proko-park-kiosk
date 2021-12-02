@@ -49,4 +49,28 @@ router.post('/occupied_status', async function(req, res, next) {
     }
 });
 
+router.get('/violation', async function(req, res, next){
+    const spotInfo = {
+        secret:req.spotInfo.secret,
+        lot_id: process.env.PARKINGLOT_ID,
+        alive_status: true,
+        updated_at: new Date(),
+    };
+    const requestBody = {spotInfo};
+    const output = await provider.postSpotViolationRequest(requestBody);
+    if (output.data.status === 'success'){
+        const {status} = await spotsModel.updateSpotBySecret(req.spotInfo.secret, {spot_status: 'ILLEGAL_PARKING'});
+        if (status === 'success'){
+            res.status(202)
+                .json({status: 'success', message: "violation registered"});
+        } else {
+            res.status(404)
+                .json({status: 'failed', message: "register violation failed"});
+        }
+    } else {
+        res.status(404)
+            .json({status: 'failed', message: "register violation to cloud api failed"});
+    }
+});
+
 module.exports = router;
