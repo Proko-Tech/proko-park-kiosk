@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const SerialPort = require('serialport');
-const port = new SerialPort(process.env.DRIVER_PORT, {baudRate: 9600});
 
 const spotsModel = require('../../database/models/spotsModel');
 
@@ -35,13 +33,7 @@ router.post('/scanned', async function(req, res, next){
     };
     try {
         const response = await provider.postParkingLotScannedRequest(requestBody);
-        // TODO: open arduino
-        port.write('open', (err) => {
-            if (err) {
-                console.log('Error on write: ', err.message);
-                res.send('failed');
-            }
-        });
+        // TODO: open arduin
         res.send(response.data);
     } catch (err){
         console.log(err);
