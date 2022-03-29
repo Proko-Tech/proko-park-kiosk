@@ -31,6 +31,20 @@ async function putParkingLotSpotRequest(requestBody) {
 }
 
 /**
+ * updates a spot with appropriate request body.
+ *
+ * NOTE: Will be removed after beta testing.
+ * @param requestBody
+ * @returns {Promise<AxiosResponse<T>>}
+ */
+async function putV0ParkingLotSpotRequest(requestBody) {
+    const response = await axios.put(`${process.env.PROVIDER_URL}/api/v0_parking_lot/spot`, requestBody, {
+        withCredentials: true,
+    });
+    return response;
+}
+
+/**
  * get request to cloud api for parking lot information
  *  * @param requestBody
  * @returns {Promise<AxiosResponse<T>>}
@@ -66,4 +80,4 @@ async function postSpotViolationRequest(requestBody){
     return response;
 }
 
-module.exports = {postParkingLotAuthenticate, putParkingLotSpotRequest, postParkingLotRequest, postParkingLotScannedRequest, postSpotViolationRequest};
+module.exports = {postParkingLotAuthenticate, putParkingLotSpotRequest, putV0ParkingLotSpotRequest, postParkingLotRequest, postParkingLotScannedRequest, postSpotViolationRequest};
