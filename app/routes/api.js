@@ -4,13 +4,13 @@ const spotsModel = require('../../database/models/spotsModel');
 const tokenUtil = require('../auth/tokenUtil');
 const provider = require('../../provider/index');
 /* /api/route this is where all the ESP8266 will make request at */
-router.get('/spot/:firmware_version', async function(req, res, next) {
+router.get('/spot/:firmware_version/:last_distance/:cam_alive_status', async function(req, res, next) {
     const {secret} = req.spotInfo;
-    const {firmware_version} = req.params;
+    const {firmware_version, last_distance, cam_alive_status} = req.params;
     const update_body = {
         alive_status: true,
         updated_at: new Date(),
-        firmware_version,
+        firmware_version, last_distance, cam_alive_status,
     };
     const rows = await spotsModel.getSpotBySecret(secret);
     const {status} = await spotsModel.updateSpotBySecret(secret, update_body);
