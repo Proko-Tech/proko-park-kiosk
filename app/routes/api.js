@@ -12,6 +12,9 @@ router.get('/spot/:firmware_version/:last_distance/:cam_alive_status/:empty_dist
         updated_at: new Date(),
         firmware_version, last_distance, cam_alive_status, empty_distance_threshold,
     };
+    if (secret === '40:91:51:45:AB:98') {
+        update_body.last_distance = last_distance * 100;
+    }
     const rows = await spotsModel.getSpotBySecret(secret);
     const {status} = await spotsModel.updateSpotBySecret(secret, update_body);
     if (rows.size !== 0 && status === 'success'){
