@@ -4,14 +4,14 @@ const spotsModel = require('../../database/models/spotsModel');
 const tokenUtil = require('../auth/tokenUtil');
 const provider = require('../../provider/index');
 /* /api/route this is where all the ESP8266 will make request at */
-router.get('/spot/:firmware_version/:last_distance/:cam_alive_status/:empty_distance_threshold/:manual_capture', async function(req, res, next) {
+router.get('/spot/:firmware_version/:last_distance/:cam_alive_status/:empty_distance_threshold', async function(req, res, next) {
     const {secret} = req.spotInfo;
-    const {firmware_version, last_distance, cam_alive_status, empty_distance_threshold, manual_capture} = req.params;
+    const {firmware_version, last_distance, cam_alive_status, empty_distance_threshold} = req.params;
 
     const update_body = {
         alive_status: true,
         updated_at: new Date(),
-        firmware_version, last_distance, cam_alive_status, empty_distance_threshold, manual_capture
+        firmware_version, last_distance, cam_alive_status, empty_distance_threshold
     };
 
     const rows = await spotsModel.getSpotBySecret(secret);
@@ -101,6 +101,17 @@ router.get('/violation/:id', async function(req, res, next){
     } else {
         res.status(404)
             .json({status: 'failed', message: "register violation to cloud api failed"});
+    }
+});
+
+router.get('/reset_manual_capture', async function(req, res, next){
+    const {status} = await spotsModel.updateSpotBySecret(req.spotInfo.secret, {manual_capture: '0'});
+    if (status === 'success') {
+        res.status(202)
+            .json({status: 'success', message: "reset manual_capture succeeded"});
+    } else {
+        res.status(404)
+            .json({status: 'failed', message: "reset manual_capture failed"});
     }
 });
 
