@@ -104,8 +104,10 @@ router.get('/violation/:id', async function(req, res, next){
     }
 });
 
+// Feature: Sensor Manual Take Picture
+// API for the ESP8266 to reset the manual_capture field in the spot table 
 router.get('/reset_manual_capture', async function(req, res, next){
-    const {status} = await spotsModel.updateSpotBySecret(req.spotInfo.secret, {manual_capture: '0'});
+    const {status} = await spotsModel.updateSpotBySecret(req.spotInfo.secret, {manual_capture: false});
     if (status === 'success') {
         res.status(202)
             .json({status: 'success', message: "reset manual_capture succeeded"});
