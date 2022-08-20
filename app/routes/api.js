@@ -11,7 +11,7 @@ router.get('/spot/:firmware_version/:last_distance/:cam_alive_status/:empty_dist
     const update_body = {
         alive_status: true,
         updated_at: new Date(),
-        firmware_version, last_distance, cam_alive_status, empty_distance_threshold
+        firmware_version, last_distance, cam_alive_status, empty_distance_threshold,
     };
 
     const rows = await spotsModel.getSpotBySecret(secret);
