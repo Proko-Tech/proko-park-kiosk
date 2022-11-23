@@ -4,7 +4,6 @@ const spot_status_enum = [
     'OCCUPIED',
     'OFF_LINE',
     'VIOLATION',
-    'OCCUPIED_WITHOUT_CARD'
 ];
 exports.up = function(knex) {
     return knex.schema.createTable('spots', (tbl)=>{
