@@ -38,7 +38,9 @@ router.post('/occupied_status', async function(req, res, next) {
     const output = await provider.putParkingLotSpotRequest(requestBody);
     console.log(output);
     if (output.data.status === 'success'){
-        const update_payload = output.data.spot_info;
+        const update_payload = {
+            spot_status: output.data.spot_info.spot_status
+        };
         const {status} = await spotsModel.updateSpotBySecret(
             req.spotInfo.secret, update_payload);
         if (status === 'success'){
