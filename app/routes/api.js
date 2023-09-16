@@ -35,11 +35,12 @@ router.post('/occupied_status', async function(req, res, next) {
         updated_at: new Date(),
     };
     const requestBody = {spotInfo};
-    console.log(requestBody);
     const output = await provider.putParkingLotSpotRequest(requestBody);
     console.log(output);
     if (output.data.status === 'success'){
-        const {status} = await spotsModel.updateSpotBySecret(req.spotInfo.secret, req.body);
+        const update_payload = output.data.spot_info;
+        const {status} = await spotsModel.updateSpotBySecret(
+            req.spotInfo.secret, update_payload);
         if (status === 'success'){
             res.status(202)
                 .json({status: 'success', message: "update in process"});
@@ -48,7 +49,7 @@ router.post('/occupied_status', async function(req, res, next) {
                 .json({status: 'failed', message: "update in local database failed"});
         }
     } else {
-        res.status(404)
+        res.status(500)
             .json({status: 'failed', message: "update to cloud api failed"});
     }
 });
