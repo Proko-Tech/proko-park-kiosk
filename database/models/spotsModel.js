@@ -66,6 +66,7 @@ async function updateSpots(spots){
                     spot_status: spot.spot_status,
                     available_firmware_version: spot.available_firmware_version,
                     manual_capture: spot.manual_capture,
+                    empty_distance_threshold: spot.empty_distance_threshold,
                 });
         });
         return {status:'success'};
