@@ -6,12 +6,12 @@ const provider = require('../../provider/index');
 /* /api/route this is where all the ESP8266 will make request at */
 router.get('/spot/:firmware_version/:last_distance/:cam_alive_status/:empty_distance_threshold', async function(req, res, next) {
     const {secret} = req.spotInfo;
-    const {firmware_version, last_distance, cam_alive_status, empty_distance_threshold} = req.params;
+    const {firmware_version, last_distance, cam_alive_status} = req.params;
 
     const update_body = {
         alive_status: true,
         updated_at: new Date(),
-        firmware_version, last_distance, cam_alive_status, empty_distance_threshold,
+        firmware_version, last_distance, cam_alive_status,
     };
 
     const rows = await spotsModel.getSpotBySecret(secret);
