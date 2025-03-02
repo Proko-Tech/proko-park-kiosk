@@ -46,14 +46,14 @@ function startScript() {
     schedule.scheduleJob('0 * * * * *', async function() {
         try {
             const response = await provider.getLotReservationsCountRequest();
-            console.log(response.data);
             const hourly_reservations_count = response.data.hourly_reservations_count;
             const min_price = response.data.min_price;
             const max_price = response.data.max_price;
             const current_datetime = DateTime.local().toUTC();
             const current_hour = current_datetime.hour;
             const suggested_price = simpleMap(
-                hourly_reservations_count, min_price, max_price, current_hour);
+                hourly_reservations_count, min_price, max_price, current_hour)
+                .toFixed(2);
             console.log("Ran suggested price, min_price: ",
                 min_price, "max_price: ", max_price, "suggested_price: ",
                 suggested_price);
