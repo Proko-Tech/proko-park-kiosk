@@ -46,6 +46,7 @@ function startScript() {
     schedule.scheduleJob('0 * * * * *', async function() {
         try {
             const response = await provider.getLotReservationsCountRequest();
+            console.log(response.data);
             const hourly_reservation_count = response.data.hourly_reservation_count;
             console.log(hourly_reservation_count);
             const min_price = response.data.min_price;
