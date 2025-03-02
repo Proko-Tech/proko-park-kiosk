@@ -80,4 +80,18 @@ async function postSpotViolationRequest(requestBody){
     return response;
 }
 
-module.exports = {postParkingLotAuthenticate, putParkingLotSpotRequest, putV0ParkingLotSpotRequest, postParkingLotRequest, postParkingLotScannedRequest, postSpotViolationRequest};
+async function getLotReservationsCountRequest() {
+    const response = await axios.get(`${process.env.PROVIDER_URL}/api/parking_lot/reservations_count`, {
+        withCredentials: true,
+    });
+    return response;
+}
+
+async function postSuggestedPrice(requestBody) {
+    const response = await axios.post(`${process.env.PROVIDER_URL}/api/parking_lot/suggested_price`, requestBody, {
+        withCredentials: true,
+    });
+    return response;
+}
+
+module.exports = {postParkingLotAuthenticate, putParkingLotSpotRequest, putV0ParkingLotSpotRequest, postParkingLotRequest, postParkingLotScannedRequest, postSpotViolationRequest, getLotReservationsCountRequest, postSuggestedPrice};
