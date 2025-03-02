@@ -43,7 +43,7 @@ function startScript() {
     // Calculates suggested price every hour.
     // TODO: move the below logic to another service that can integrate many
     // other models in the future.
-    schedule.scheduleJob('0 * * * * *', async function() {
+    schedule.scheduleJob('0 * * * *', async function() {
         try {
             const response = await provider.getLotReservationsCountRequest();
             const hourly_reservations_count = response.data.hourly_reservations_count;
